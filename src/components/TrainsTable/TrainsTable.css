@@ -11,7 +11,6 @@
 
 .trains__item {
   box-sizing: border-box;
-  /* min-height: 40px; */
   outline: 1px solid black;
 
   display: grid;
@@ -29,6 +28,11 @@
 .trains__item_header {
   background-color: #0882FF;
   color: white;
+}
+
+.trains__item_header:hover {
+  cursor: default;
+  background-color: #0882FF;
 }
 
 .trains__item-text {
