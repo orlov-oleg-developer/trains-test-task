@@ -1,9 +1,9 @@
 import './TrainsTable.css'
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { ITrain } from "../../types/trains"
-import getAuniqueKey from '../../utils/getAUniqueKey'
+import getAUniqueKey from '../../utils/getAUniqueKey'
 
 interface TrainsTableProps {
   onTrainClick: (item: ITrain) => void;
@@ -25,7 +25,7 @@ const TrainsTable: FC<TrainsTableProps> = ({ onTrainClick }) => {
       </li>
       {trains &&
         trains.map((item, i) =>
-          <li key={getAuniqueKey(i)} className='trains__item' onClick={() => onTrainClick(item)}>
+          <li key={getAUniqueKey(i)} className='trains__item' onClick={() => onTrainClick(item)}>
             <p className='trains__item-text'>{item.name}</p>
             <p className='trains__item-text'>{item.description}</p>
           </li>

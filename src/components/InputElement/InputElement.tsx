@@ -1,13 +1,15 @@
 import './InputElement.css'
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import useInput from "../../hooks/useInput";
 
 interface InputElementProps {
+  onInputChange: (name: string, speedValue: number) => void;
   inputType: string;
   value: number;
+  name: string;
 }
 
-const InputElement: FC<InputElementProps> = ({ inputType, value }) => {
+const InputElement: FC<InputElementProps> = ({ onInputChange, inputType, value, name }) => {
 
   const input = useInput(
     value,
@@ -18,9 +20,10 @@ const InputElement: FC<InputElementProps> = ({ inputType, value }) => {
   )
 
   useEffect(() => {
-    console.log(input.isInt)
+    if (input.value) {
+      onInputChange(name, Number(input.value))
+    }
   }, [input])
-
 
   return (
     <label className="form_label">
@@ -28,7 +31,9 @@ const InputElement: FC<InputElementProps> = ({ inputType, value }) => {
         type={`${inputType}`}
         className='form_input'
         value={input.value}
-        onChange={(event) => input.onChange(event.target.value)}
+        onChange={(event) => {
+          input.onChange(event.target.value)
+        }}
         onBlur={() => input.onBlur()}
       />
       {(input.isDirty && input.isInt.state) &&
@@ -38,7 +43,6 @@ const InputElement: FC<InputElementProps> = ({ inputType, value }) => {
         <span className="form__input-error">{input.isPositive.errorMessage}</span>
       }
     </label>
-
   );
 }
 
