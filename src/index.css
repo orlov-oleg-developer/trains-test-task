@@ -2,11 +2,11 @@
 @import url(./vendor/fonts/fonts.css);
 
 #root {
-    max-width: 1280px;
-    min-width: 320px;
-    margin: 0 auto;
+  max-width: 1280px;
+  min-width: 320px;
+  margin: 0 auto;
 
-    color: black;
-    font-family: 'Inter', Arial, Helvetica, sans-serif;
-    background-color: white;
+  color: black;
+  font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
+  background-color: white;
 }

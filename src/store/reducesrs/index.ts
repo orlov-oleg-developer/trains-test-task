@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import { userReducer } from "./userReducer";
+import { trainsReducer } from "./trainsReducer";
 
 export const rootReducer = combineReducers({
-  user: userReducer,
+  trains: trainsReducer,
 })
 
 export type RootState = ReturnType<typeof rootReducer>

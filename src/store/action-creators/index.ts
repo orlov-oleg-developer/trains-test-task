@@ -1,5 +1,5 @@
-import * as UserActionCreators from './user'
+import * as TrainsActionCreators from './trains'
 
 export default {
-  ...UserActionCreators,
+  ...TrainsActionCreators,
 }
