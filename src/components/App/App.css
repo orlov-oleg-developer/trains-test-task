@@ -14,3 +14,10 @@
   font-size: 20px;
   text-align: center;
 }
+
+.App__tables {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  gap: 50px;
+}

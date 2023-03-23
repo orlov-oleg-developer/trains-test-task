@@ -1,58 +1,33 @@
 import { useEffect, useState } from 'react'
 
 const useValidation = (inputValue: any, validations: any) => {
-  const [minLengthError, setMinLengthError] = useState({ state: false, errorMessage: "" });
-  const [maxLengthError, setMaxLengthError] = useState({ state: false, errorMessage: "" });
-  const [isEmpty, setIsEmpty] = useState({ state: true, errorMessage: "Поле не может быть пустым" });
-  const [isEmailError, setIsEmailError] = useState({ state: false, errorMessage: "Неверно указан email" });
-  const [isNameError, setIsNameError] = useState({ state: false, errorMessage: "Поле должно содержать только латиницу, кириллицу, пробел или дефис" })
+  const [isInt, setIsInt] = useState({ state: true, errorMessage: "Число должно быть целым" });
+  const [isPositive, setIsPositive] = useState({ state: true, errorMessage: "Число должно быть положительным" });
   const [isInputValid, setIsInputValid] = useState(false);
 
   useEffect(() => {
     for (const validation in validations) {
       switch (validation) {
-        case 'minLength':
-          inputValue.length < validations[validation] ? setMinLengthError({ errorMessage: `В поле не может быть меньше ${validations[validation]} символов`, state: true })
-            : setMinLengthError({ ...minLengthError, state: false });
+        case 'isInt':
+          Number.isInteger(Number(inputValue)) ? setIsInt({ ...isInt, state: false }) : setIsInt({ ...isInt, state: true });
           break;
-
-        case 'maxLength':
-          inputValue.length >= validations[validation] ? setMaxLengthError({ errorMessage: `В поле не может быть больше ${validations[validation]} символов`, state: true })
-            : setMaxLengthError({ ...maxLengthError, state: false });
-          break;
-
-        case 'isEmpty':
-          inputValue ? setIsEmpty({ ...isEmpty, state: false }) : setIsEmpty({ ...isEmpty, state: true });
-          break;
-
-        case 'isEmail':
-          const mailRegex = new RegExp('.+@.+\\..+');
-          mailRegex.test(String(inputValue).toLowerCase()) ? setIsEmailError({ ...isEmailError, state: false })
-            : setIsEmailError({ ...isEmailError, state: true });
-          break;
-
-        case 'isName':
-          const nameRegex = /[\wа-я\sё]/gi;
-          nameRegex.test(String(inputValue).toLowerCase()) ? setIsNameError({ ...isNameError, state: false })
-            : setIsNameError({ ...isNameError, state: true });
+        case 'isPositive':
+          (Number(inputValue) > 0) ? setIsPositive({ ...isPositive, state: false }) : setIsPositive({ ...isPositive, state: true });
           break;
       }
     }
   }, [inputValue])
 
   useEffect(() => {
-    if (minLengthError.state || maxLengthError.state || isEmpty.state || isEmailError.state || isNameError.state) {
+    if (isInt.state || isPositive.state) {
       setIsInputValid(false)
     }
     else setIsInputValid(true)
-  }, [minLengthError, maxLengthError, isEmpty, isEmailError, isNameError])
+  }, [isInt, isPositive])
 
   return {
-    minLengthError,
-    maxLengthError,
-    isEmpty,
-    isEmailError,
-    isNameError,
+    isInt,
+    isPositive,
     isInputValid,
   }
 }
