@@ -15,10 +15,9 @@ export const getTrainsInfo = () => {
         dispatch({ type: TrainsActionTypes.FETCH_TRAINS_SUCCESS, payload: trains })
       } else await Promise.reject(res)
     } catch (e: any) {
-      const errorMessage = await e.json();
       dispatch({
         type: TrainsActionTypes.FETCH_TRAINS_ERROR,
-        payload: errorMessage.message
+        payload: e
       })
     }
   }

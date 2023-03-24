@@ -4,14 +4,8 @@ import { useTypedSelector } from '../../hooks/useTypedSelector'
 import InputElement from '../InputElement/InputElement';
 import getAUniqueKey from '../../utils/getAUniqueKey'
 
-
 interface SpeedLimitsTableProps {
   isSpeedLimitsTableActive: boolean;
-}
-
-interface input {
-  name: string,
-  isValid: boolean
 }
 
 const SpeedLimitsTable: FC<SpeedLimitsTableProps> = ({ isSpeedLimitsTableActive }) => {

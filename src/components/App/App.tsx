@@ -3,14 +3,14 @@ import React, { FC, useState } from 'react';
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions'
 
-import TrainsTable from '../TrainsTable/TrainsTable';
-import SpeedLimitsTable from '../SpeedLimitsTable/SpeedLimitsTable';
-
 import { ISpeedLimit } from "../../types/speedLimit"
 import { ITrain } from "../../types/trains"
 
+import TrainsTable from '../TrainsTable/TrainsTable';
+import SpeedLimitsTable from '../SpeedLimitsTable/SpeedLimitsTable';
+
 const App: FC = () => {
-  const { trains, error, loading } = useTypedSelector(state => state.trains)
+  const { trains } = useTypedSelector(state => state.trains)
   const { setSpeedLimits } = useActions();
   const [isSpeedLimitsTableActive, setIsSpeedLimitsTableActive] = useState(false);
 
