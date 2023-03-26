@@ -19,22 +19,25 @@ const TrainsTable: FC<TrainsTableProps> = ({ onTrainClick }) => {
   }, [])
 
   return (
-    <ul className="trains">
-      <li key={'abcd'} className='trains__item trains__item_header'>
-        <p className='trains__item-text'>Название</p>
-        <p className='trains__item-text'>Описание</p>
-      </li>
-      {trains &&
-        trains.map((item, i) =>
-          <li key={getAUniqueKey(i)} className='trains__item' onClick={() => onTrainClick(item)}>
-            <p className='trains__item-text'>{item.name}</p>
-            <p className='trains__item-text'>{item.description}</p>
-          </li>
-        )
-      }
-      {error && <p>Произошла ошибка при отправке запроса на сервер</p>}
-    </ul>
-  );
+    <table className='trains-table'>
+      <thead className='trains-table-head'>
+        <tr className='trains-table-row'>
+          <th className='trains-table-cell'>Название</th>
+          <th className='trains-table-cell'>Описание</th>
+        </tr>
+      </thead>
+      <tbody className='trains-table-body'>
+        {trains &&
+          trains.map((item, i) =>
+            <tr className='trains-table-row' key={getAUniqueKey(i)} onClick={() => onTrainClick(item)}>
+              <td className='trains-table-cell'>{item.name}</td>
+              <td className='trains-table-cell'>{item.description}</td>
+            </tr>
+          )
+        }
+      </tbody>
+    </table>
+  )
 }
 
 export default TrainsTable;

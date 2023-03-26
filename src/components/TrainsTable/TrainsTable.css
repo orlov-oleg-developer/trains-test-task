@@ -1,50 +1,29 @@
-.trains {
-  box-sizing: border-box;
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-
-  display: flex;
-  flex-direction: column;
-  align-items: start;
+.trains-table {
+  border-collapse: collapse;
 }
 
-.trains__item {
-  box-sizing: border-box;
-  outline: 1px solid black;
-
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-
-  transition: all 0.2s ease-in-out;
-}
-
-.trains__item:hover {
-  cursor: pointer;
-  background-color: rgba(1, 1, 1, 0.3);
-}
-
-.trains__item_header {
+.trains-table-head {
   background-color: #0882FF;
   color: white;
 }
 
-.trains__item_header:hover {
-  cursor: default;
-  background-color: #0882FF;
+.trains-table-row {
+  border: 1px solid black;
+  transition: all 0.2s ease-in-out;
 }
 
-.trains__item-text {
-  min-width: 115px;
+.trains-table-body .trains-table-row:hover {
+  cursor: pointer;
+  background-color: rgba(1, 1, 1, 0.3);
+}
+
+.trains-table-cell {
   margin: 0;
-  padding: 10px;
+  padding: 10px 20px;
 
   font-weight: 500;
   font-size: 16px;
   text-align: center;
-}
 
-.trains__item-text:first-of-type {
   border-right: 1px solid black;
 }
