@@ -20,10 +20,8 @@ const InputElement: FC<InputElementProps> = ({ onInputChange, inputType, value, 
   )
 
   useEffect(() => {
-    if (input.value) {
-      onInputChange(name, Number(input.value))
-    }
-  }, [input])
+    onInputChange(name, input.value);
+  }, [input.value])
 
   return (
     <label className="form_label">
@@ -32,7 +30,7 @@ const InputElement: FC<InputElementProps> = ({ onInputChange, inputType, value, 
         className='form_input'
         value={input.value}
         onChange={(event) => {
-          input.onChange(event.target.value)
+          input.onChange(event.target.value);
         }}
         onBlur={() => input.onBlur()}
       />

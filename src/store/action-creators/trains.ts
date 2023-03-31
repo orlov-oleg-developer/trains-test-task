@@ -1,6 +1,6 @@
 import { URL } from '../../config/config'
 import { Dispatch } from "redux";
-import { TrainsAction, TrainsActionTypes } from "../../types/trains";
+import { ITrain, TrainsAction, TrainsActionTypes } from "../../types/trains";
 
 export const getTrainsInfo = () => {
   return async (dispatch: Dispatch<TrainsAction>) => {
@@ -23,6 +23,6 @@ export const getTrainsInfo = () => {
   }
 }
 
-export const setTrains = (trains: TrainsActionTypes.SET_TRAINS) => {
+export const setTrains = (trains: ITrain[]) => {
   return { type: TrainsActionTypes.SET_TRAINS, payload: trains }
 }

@@ -1,29 +1,54 @@
+.trains-table__container {
+  padding: 25px;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.trains-table__title {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 0 10px 15px;
+
+  font-weight: 700;
+  font-size: 20px;
+  text-align: start;
+}
+
 .trains-table {
+  flex-direction: column;
   border-collapse: collapse;
 }
 
-.trains-table-head {
-  background-color: #0882FF;
-  color: white;
+.trains-table__head {
+  border-radius: 5px 5px 0 0;
 }
 
-.trains-table-row {
-  border: 1px solid black;
+.trains-table__row {
+  border-bottom: 2px solid #F1F1F1;
   transition: all 0.2s ease-in-out;
+  background-color: white
 }
 
-.trains-table-body .trains-table-row:hover {
+.trains-table__row:last-of-type {
+  border-bottom: none;
+}
+
+.trains-table__body .trains-table__row:hover {
   cursor: pointer;
-  background-color: rgba(1, 1, 1, 0.3);
+  background-color: #EEF6FF;
 }
 
-.trains-table-cell {
+.trains-table__cell {
   margin: 0;
-  padding: 10px 20px;
+  padding: 15px 75px 15px 20px;
 
-  font-weight: 500;
+  font-weight: 400;
   font-size: 16px;
-  text-align: center;
+  text-align: start;
+}
 
-  border-right: 1px solid black;
+.trains-table__cell_place_head {
+  font-weight: 500;
+  background-color: #F6F8FA;
+  color: grey;
 }

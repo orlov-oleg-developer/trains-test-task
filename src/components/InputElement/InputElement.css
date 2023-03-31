@@ -12,12 +12,22 @@
   padding: 0;
   margin: 0 auto;
 
-  font-weight: 500;
+  font-weight: 400;
   font-size: 16px;
-  text-align: center;
+  text-align: end;
   max-width: 200px;
   border: none;
   outline: 0;
+
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.form_input:hover {
+  border-bottom: 1px solid black;
+}
+
+.form_input:focus {
+  border-bottom: 1px solid black;
 }
 
 .form__input-error {

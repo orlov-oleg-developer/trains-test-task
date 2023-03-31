@@ -19,24 +19,27 @@ const TrainsTable: FC<TrainsTableProps> = ({ onTrainClick }) => {
   }, [])
 
   return (
-    <table className='trains-table'>
-      <thead className='trains-table-head'>
-        <tr className='trains-table-row'>
-          <th className='trains-table-cell'>Название</th>
-          <th className='trains-table-cell'>Описание</th>
-        </tr>
-      </thead>
-      <tbody className='trains-table-body'>
-        {trains &&
-          trains.map((item, i) =>
-            <tr className='trains-table-row' key={getAUniqueKey(i)} onClick={() => onTrainClick(item)}>
-              <td className='trains-table-cell'>{item.name}</td>
-              <td className='trains-table-cell'>{item.description}</td>
-            </tr>
-          )
-        }
-      </tbody>
-    </table>
+    <div className='trains-table__container'>
+      <h2 className='trains-table__title'>Поезда</h2>
+      <table className='trains-table'>
+        <thead className='trains-table__head'>
+          <tr className='trains-table__row'>
+            <th className='trains-table__cell trains-table__cell_place_head'>Название</th>
+            <th className='trains-table__cell trains-table__cell_place_head'>Описание</th>
+          </tr>
+        </thead>
+        <tbody className='trains-table__body'>
+          {trains &&
+            trains.map((item, i) =>
+              <tr className='trains-table__row' key={getAUniqueKey(i)} onClick={() => onTrainClick(item)}>
+                <td className='trains-table__cell'>{item.name}</td>
+                <td className='trains-table__cell'>{item.description}</td>
+              </tr>
+            )
+          }
+        </tbody>
+      </table>
+    </div>
   )
 }
 
