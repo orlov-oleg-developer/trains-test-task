@@ -11,9 +11,8 @@ interface SpeedLimitsTableProps {
   onSpeedChange: (name: string, value: number) => void;
 }
 
-const SpeedLimitsTable: FC<SpeedLimitsTableProps> = ({ isSpeedLimitsTableActive, selectedTrain, onSpeedChange }) => {
+const SpeedLimitsTable: FC<SpeedLimitsTableProps> = React.memo(({ isSpeedLimitsTableActive, selectedTrain, onSpeedChange }) => {
   const { trains } = useTypedSelector(state => state.trains)
-  const { setTrains } = useActions();
   const [speedLimits, setSpeedLimits] = useState<any[]>([])
 
   useEffect(() => {
@@ -22,9 +21,16 @@ const SpeedLimitsTable: FC<SpeedLimitsTableProps> = ({ isSpeedLimitsTableActive,
     }
   }, [selectedTrain])
 
+  useEffect(() => {
+    // console.log('speedLimits were changed')
+  }, [speedLimits])
+
+  if (speedLimits[0]?.name === '') return <div></div>;
+
   return (
     <div className={`speedLimits-table__container ${isSpeedLimitsTableActive && 'speedLimits-table__container_active'}`}>
       <h2 className='speedLimits-table__title'>Ограничения по скорости</h2>
+      <h2 className='speedLimits-table__title'>{selectedTrain}</h2>
       <table className={`speedLimits-table`}>
         <thead className='speedLimits-table__head'>
           <tr key={'abc'} className='speedLimits-table__row'>
@@ -49,9 +55,9 @@ const SpeedLimitsTable: FC<SpeedLimitsTableProps> = ({ isSpeedLimitsTableActive,
           }
         </tbody>
       </table>
-      <button onClick={() => console.log('click')}>Clicker</button>
+      {/* <button onClick={() => console.log('click')}>Clicker</button> */}
     </div>
   );
-}
+})
 
 export default SpeedLimitsTable;

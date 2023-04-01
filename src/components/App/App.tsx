@@ -12,20 +12,22 @@ import SpeedLimitsTable from '../SpeedLimitsTable/SpeedLimitsTable';
 const App: FC = () => {
   const { trains } = useTypedSelector(state => state.trains)
   // const { speedLimits } = useTypedSelector(state => state.speedLimits)
-  // const { setSpeedLimits } = useActions();
+  const { setTrains } = useActions();
   const [selectedTrain, setSelectedTrain] = useState('');
-  const [updatedTrains, setUpdatedTrains] = useState<ITrain[]>([]);
   const [isSpeedLimitsTableActive, setIsSpeedLimitsTableActive] = useState(false);
 
   const onTrainClick = (item: ITrain) => {
-    const speedLimitsArray: ISpeedLimit[] = trains.filter((train) => train.name === item.name)[0].speedLimits
+    // const speedLimitsArray: ISpeedLimit[] = trains.filter((train) => train.name === item.name)[0].speedLimits
     // setSpeedLimits(speedLimitsArray)
-    setIsSpeedLimitsTableActive(true)
-    setSelectedTrain(item.name)
+    if (isSpeedLimitsTableActive === false) setIsSpeedLimitsTableActive(true);
+    setSelectedTrain(item.name);
   }
 
+  let trainsArray: ITrain[] = trains;
+  console.log('TrainsArray', trainsArray)
+
   const onSpeedChange = (name: string, value: number) => {
-    const trainsArray = trains.map((train) => {
+    trainsArray = trains.map((train) => {
       if (train.name === selectedTrain) {
         return {
           name: train.name,
@@ -41,27 +43,26 @@ const App: FC = () => {
         }
       } else return train
     })
-    console.log(trainsArray)
-    // setUpdatedTrains(trainsArray);
   }
 
   useEffect(() => {
-    console.log(updatedTrains)
-  }, [updatedTrains])
+    // console.log('changeTrainsData')
+    setTrains(trainsArray);
+  }, [selectedTrain])
 
-  useEffect(() => {
-    function onEnter(event: any) {
-      if (event.key === 'Enter') {
-        console.log('Enter')
-        // onSpeedLimitsSubmit();
-      }
-    }
+  // useEffect(() => {
+  //   function onEnter(event: any) {
+  //     if (event.key === 'Enter') {
+  //       console.log('Enter')
+  //       // onSpeedLimitsSubmit();
+  //     }
+  //   }
 
-    document.addEventListener('keydown', onEnter);
-    return () => {
-      document.removeEventListener('keydown', onEnter);
-    }
-  }, []);
+  //   document.addEventListener('keydown', onEnter);
+  //   return () => {
+  //     document.removeEventListener('keydown', onEnter);
+  //   }
+  // }, []);
 
   return (
     <div className="App">

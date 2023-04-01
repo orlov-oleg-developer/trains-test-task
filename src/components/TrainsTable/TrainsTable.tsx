@@ -1,5 +1,5 @@
 import './TrainsTable.css'
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { ITrain } from "../../types/trains"
@@ -10,13 +10,17 @@ interface TrainsTableProps {
   onTrainClick: (item: ITrain) => void;
 }
 
-const TrainsTable: FC<TrainsTableProps> = ({ onTrainClick }) => {
+const TrainsTable: FC<TrainsTableProps> = React.memo(({ onTrainClick }) => {
   const { trains, error } = useTypedSelector(state => state.trains)
   const { getTrainsInfo } = useActions();
 
   useEffect(() => {
     getTrainsInfo();
   }, [])
+
+  if (trains[0].name === '') return <div></div>;
+
+  // console.log('Train component was rendered');
 
   return (
     <div className='trains-table__container'>
@@ -41,6 +45,6 @@ const TrainsTable: FC<TrainsTableProps> = ({ onTrainClick }) => {
       </table>
     </div>
   )
-}
+})
 
 export default TrainsTable;
