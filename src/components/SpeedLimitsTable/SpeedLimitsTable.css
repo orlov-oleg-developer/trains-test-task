@@ -39,11 +39,6 @@
   border-bottom: none;
 }
 
-.speedLimits-table__body .speedLimits-table__row:hover {
-  cursor: pointer;
-  background-color: #EEF6FF;
-}
-
 .speedLimits-table__cell {
   margin: 0;
   padding: 15px 75px 15px 20px;

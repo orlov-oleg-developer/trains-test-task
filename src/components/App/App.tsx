@@ -1,74 +1,42 @@
 import './App.css';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions'
 
-import { ISpeedLimit } from "../../types/speedLimit"
-import { ITrain } from "../../types/trains"
-
 import TrainsTable from '../TrainsTable/TrainsTable';
 import SpeedLimitsTable from '../SpeedLimitsTable/SpeedLimitsTable';
+import Preloader from '../Preloader/Preloader';
 
 const App: FC = () => {
-  const { trains } = useTypedSelector(state => state.trains)
-  // const { speedLimits } = useTypedSelector(state => state.speedLimits)
-  const { setTrains } = useActions();
-  const [selectedTrain, setSelectedTrain] = useState('');
-  const [isSpeedLimitsTableActive, setIsSpeedLimitsTableActive] = useState(false);
+  const { trains, loading } = useTypedSelector(state => state.trains)
+  const { getTrainsInfo } = useActions();
 
-  const onTrainClick = (item: ITrain) => {
-    // const speedLimitsArray: ISpeedLimit[] = trains.filter((train) => train.name === item.name)[0].speedLimits
-    // setSpeedLimits(speedLimitsArray)
-    if (isSpeedLimitsTableActive === false) setIsSpeedLimitsTableActive(true);
-    setSelectedTrain(item.name);
-  }
+  const [selectedTrainName, setSelectedTrainName] = useState('');
 
-  let trainsArray: ITrain[] = trains;
-  console.log('TrainsArray', trainsArray)
-
-  const onSpeedChange = (name: string, value: number) => {
-    trainsArray = trains.map((train) => {
-      if (train.name === selectedTrain) {
-        return {
-          name: train.name,
-          description: train.description,
-          speedLimits: train.speedLimits.map((speedLinit) => {
-            if (speedLinit.name === name) {
-              return {
-                name: name,
-                speedLimit: value
-              }
-            } else return speedLinit
-          })
-        }
-      } else return train
-    })
-  }
+  const onEnter = useCallback((event: any) => {
+    if (event.key === 'Enter') {
+      console.log(trains)
+    }
+  }, [trains])
 
   useEffect(() => {
-    // console.log('changeTrainsData')
-    setTrains(trainsArray);
-  }, [selectedTrain])
+    getTrainsInfo();
+  }, [])
 
-  // useEffect(() => {
-  //   function onEnter(event: any) {
-  //     if (event.key === 'Enter') {
-  //       console.log('Enter')
-  //       // onSpeedLimitsSubmit();
-  //     }
-  //   }
+  useEffect(() => {
+    document.addEventListener('keydown', onEnter);
+    return () => {
+      document.removeEventListener('keydown', onEnter);
+    }
+  }, [onEnter])
 
-  //   document.addEventListener('keydown', onEnter);
-  //   return () => {
-  //     document.removeEventListener('keydown', onEnter);
-  //   }
-  // }, []);
+  { loading && <Preloader /> }
 
   return (
     <div className="App">
       <div className='App__tables'>
-        <TrainsTable onTrainClick={onTrainClick} />
-        <SpeedLimitsTable isSpeedLimitsTableActive={isSpeedLimitsTableActive} selectedTrain={selectedTrain} onSpeedChange={onSpeedChange} />
+        <TrainsTable setSelectedTrainName={setSelectedTrainName} />
+        {selectedTrainName && <SpeedLimitsTable selectedTrainName={selectedTrainName} />}
       </div>
     </div>
   );

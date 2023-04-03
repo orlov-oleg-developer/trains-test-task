@@ -1,37 +1,50 @@
 import './InputElement.css'
+import { ISpeedLimit } from "../../types/speedLimit"
+import { ITrain } from "../../types/trains"
 import React, { FC, useEffect } from 'react';
-import useInput from "../../hooks/useInput";
+
+import useInput from '../../hooks/useInput';
 
 interface InputElementProps {
-  onInputChange: (name: string, speedValue: number) => void;
-  inputType: string;
-  value: number;
-  name: string;
+  speedLimit: ISpeedLimit;
+  trainList: ITrain[];
+  setTrainList: (e: ITrain[]) => void;
+  trainName: string;
 }
 
-const InputElement: FC<InputElementProps> = ({ onInputChange, inputType, value, name }) => {
-
+const InputElement: FC<InputElementProps> = ({ speedLimit, trainList, setTrainList, trainName }) => {
   const input = useInput(
-    value,
+    speedLimit.speedLimit,
     {
       isInt: true,
       isPositive: true,
     }
   )
 
-  useEffect(() => {
-    onInputChange(name, input.value);
-  }, [input.value])
+  const handleChange = (e: any) => {
+    setTrainList(trainList.map(train => {
+      if (trainName === train.name) {
+        return ({
+          ...train,
+          speedLimits: train.speedLimits.
+            map((speed) => {
+              if (speed.name === speedLimit.name) {
+                return ({ ...speed, speedLimit: Number(+e.target.value) })
+              } else return speed
+            })
+            .sort((a, b) => { return a.speedLimit - b.speedLimit })
+        })
+      } else return train
+    }))
+  }
 
   return (
     <label className="form_label">
       <input
-        type={`${inputType}`}
-        className='form_input'
+        className="form_input"
+        type="number"
         value={input.value}
-        onChange={(event) => {
-          input.onChange(event.target.value);
-        }}
+        onChange={handleChange}
         onBlur={() => input.onBlur()}
       />
       {(input.isDirty && input.isInt.state) &&

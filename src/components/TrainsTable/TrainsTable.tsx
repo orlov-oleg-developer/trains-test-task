@@ -1,17 +1,14 @@
 import './TrainsTable.css'
-import React, { FC, useEffect, useMemo } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useActions } from '../../hooks/useActions'
 import { useTypedSelector } from '../../hooks/useTypedSelector'
-import { ITrain } from "../../types/trains"
-
-import getAUniqueKey from '../../utils/getAUniqueKey'
 
 interface TrainsTableProps {
-  onTrainClick: (item: ITrain) => void;
+  setSelectedTrainName: (name: string) => void;
 }
 
-const TrainsTable: FC<TrainsTableProps> = React.memo(({ onTrainClick }) => {
-  const { trains, error } = useTypedSelector(state => state.trains)
+const TrainsTable: FC<TrainsTableProps> = React.memo(({ setSelectedTrainName }) => {
+  const { trains } = useTypedSelector(state => state.trains)
   const { getTrainsInfo } = useActions();
 
   useEffect(() => {
@@ -19,8 +16,6 @@ const TrainsTable: FC<TrainsTableProps> = React.memo(({ onTrainClick }) => {
   }, [])
 
   if (trains[0].name === '') return <div></div>;
-
-  // console.log('Train component was rendered');
 
   return (
     <div className='trains-table__container'>
@@ -34,10 +29,10 @@ const TrainsTable: FC<TrainsTableProps> = React.memo(({ onTrainClick }) => {
         </thead>
         <tbody className='trains-table__body'>
           {trains &&
-            trains.map((item, i) =>
-              <tr className='trains-table__row' key={getAUniqueKey(i)} onClick={() => onTrainClick(item)}>
-                <td className='trains-table__cell'>{item.name}</td>
-                <td className='trains-table__cell'>{item.description}</td>
+            trains.map((train, i) =>
+              <tr className='trains-table__row' key={train.name} onClick={() => setSelectedTrainName(train.name)}>
+                <td className='trains-table__cell'>{train.name}</td>
+                <td className='trains-table__cell'>{train.description}</td>
               </tr>
             )
           }
