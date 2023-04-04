@@ -1,7 +1,8 @@
 import './SpeedLimitsTable.css'
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions'
+
 import InputElement from '../InputElement/InputElement';
 
 interface SpeedLimitsTableProps {

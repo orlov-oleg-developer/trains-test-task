@@ -33,3 +33,26 @@
   align-items: start;
   gap: 50px;
 }
+
+.App__speed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.App__button {
+  box-sizing: border-box;
+  padding: 15px;
+  margin: 25px 0 0;
+
+  border-radius: 5px;
+  border: 1px solid black;
+  background-color: white;
+
+  color: black;
+}
+
+.App__button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}

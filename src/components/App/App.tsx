@@ -1,5 +1,5 @@
 import './App.css';
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions'
 
@@ -10,25 +10,25 @@ import Preloader from '../Preloader/Preloader';
 const App: FC = () => {
   const { trains, loading } = useTypedSelector(state => state.trains)
   const { getTrainsInfo } = useActions();
-
   const [selectedTrainName, setSelectedTrainName] = useState('');
 
-  const onEnter = useCallback((event: any) => {
-    if (event.key === 'Enter') {
-      console.log(trains)
+  const errors = useTypedSelector(state => state.errors)
+
+  const onSubmit = () => {
+    let isValidData = true;
+
+    for (const property in errors) {
+      if (errors[property] === false) isValidData = false;
     }
-  }, [trains])
+
+    if (isValidData) {
+      console.log(trains);
+    } else console.log('Данные не валидны')
+  }
 
   useEffect(() => {
     getTrainsInfo();
   }, [])
-
-  useEffect(() => {
-    document.addEventListener('keydown', onEnter);
-    return () => {
-      document.removeEventListener('keydown', onEnter);
-    }
-  }, [onEnter])
 
   { loading && <Preloader /> }
 
@@ -36,9 +36,15 @@ const App: FC = () => {
     <div className="App">
       <div className='App__tables'>
         <TrainsTable setSelectedTrainName={setSelectedTrainName} />
-        {selectedTrainName && <SpeedLimitsTable selectedTrainName={selectedTrainName} />}
+        {selectedTrainName && <div className='App__speed'>
+          <SpeedLimitsTable selectedTrainName={selectedTrainName} />
+          <button
+            className='App__button'
+            onClick={onSubmit}
+          >Отправить данные</button>
+        </div>}
       </div>
-    </div>
+    </div >
   );
 };
 

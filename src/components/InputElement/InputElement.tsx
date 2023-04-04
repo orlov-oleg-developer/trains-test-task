@@ -1,7 +1,10 @@
 import './InputElement.css'
-import { ISpeedLimit } from "../../types/speedLimit"
-import { ITrain } from "../../types/trains"
 import React, { FC, useEffect } from 'react';
+
+import { ISpeedLimit } from "../../types/speedLimit";
+import { ITrain } from "../../types/trains";
+
+import { useActions } from '../../hooks/useActions'
 
 import useInput from '../../hooks/useInput';
 
@@ -13,6 +16,8 @@ interface InputElementProps {
 }
 
 const InputElement: FC<InputElementProps> = ({ speedLimit, trainList, setTrainList, trainName }) => {
+  const { setErrors } = useActions();
+
   const input = useInput(
     speedLimit.speedLimit,
     {
@@ -37,6 +42,18 @@ const InputElement: FC<InputElementProps> = ({ speedLimit, trainList, setTrainLi
       } else return train
     }))
   }
+
+  useEffect(() => {
+    if (input.isInputValid) {
+      setErrors({
+        [`${trainName}.${speedLimit.name}`]: true
+      })
+    } else {
+      setErrors({
+        [`${trainName}.${speedLimit.name}`]: false
+      })
+    }
+  }, [input.isInputValid])
 
   return (
     <label className="form_label">
