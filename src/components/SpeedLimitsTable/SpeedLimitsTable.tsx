@@ -1,9 +1,11 @@
 import './SpeedLimitsTable.css'
-import React, { FC } from 'react';
+import React, { FC, ChangeEvent } from 'react';
 import { useTypedSelector } from '../../hooks/useTypedSelector'
 import { useActions } from '../../hooks/useActions'
 
 import InputElement from '../InputElement/InputElement';
+import { ValidatingInputBS } from '../Inputs/ValidatingInputBS';
+import { ISpeedLimit } from '../../types/speedLimit';
 
 interface SpeedLimitsTableProps {
   selectedTrainName: string;
@@ -14,6 +16,24 @@ const SpeedLimitsTable: FC<SpeedLimitsTableProps> = React.memo(({ selectedTrainN
   const { setTrains } = useActions();
 
   const speedLimitsArray = trains.filter(train => train.name === selectedTrainName)[0].speedLimits;
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>, speedLimit: ISpeedLimit) => {
+    console.log('handle')
+    setTrains(trains.map(train => {
+      if (selectedTrainName === train.name) {
+        return ({
+          ...train,
+          speedLimits: train.speedLimits.
+            map((speed) => {
+              if (speed.name === speedLimit.name) {
+                return ({ ...speed, speedLimit: Number(+e.target.value) })
+              } else return speed
+            })
+            .sort((a, b) => { return a.speedLimit - b.speedLimit })
+        })
+      } else return train
+    }))
+  }
 
   return (
     <div className={`speedLimits-table__container speedLimits-table__container_active`}>
@@ -37,6 +57,13 @@ const SpeedLimitsTable: FC<SpeedLimitsTableProps> = React.memo(({ selectedTrainN
                   setTrainList={setTrains}
                   trainName={selectedTrainName}
                 />
+                {/* <ValidatingInputBS
+                  value={speedLimit.speedLimit.toString()}
+                  onBlur={(event) => handleChange(event, speedLimit)}
+                  onBlurValidationFunc={(value) => {
+                    return (Number(value) >= 0 && Number.isInteger(Number(value)))
+                  }}
+                /> */}
               </td>
             </tr>
           )}
