@@ -12,7 +12,17 @@ export const getTrainsInfo = () => {
         })
       if (res.ok) {
         const trains = await res.json();
-        dispatch({ type: TrainsActionTypes.FETCH_TRAINS_SUCCESS, payload: trains })
+        dispatch({
+          type: TrainsActionTypes.FETCH_TRAINS_SUCCESS, payload: trains.map((train: ITrain, i: number) => {
+            if (i === 14) {
+              return {
+                ...train,
+                speedLimits: train.speedLimits.map(sL => ({ ...sL, speedLimit: -4 }))
+              }
+            }
+            return train
+          })
+        })
       } else await Promise.reject(res)
     } catch (e: any) {
       dispatch({

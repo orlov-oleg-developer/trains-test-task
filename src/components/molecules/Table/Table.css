@@ -1,0 +1,56 @@
+.table__container {
+  margin: 0 auto;
+  padding: 25px;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.table__title {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 0 10px 15px;
+
+  font-weight: 700;
+  font-size: 20px;
+  text-align: start;
+}
+
+.table {
+  margin: 0 auto;
+  flex-direction: column;
+  border-collapse: collapse;
+}
+
+.table__head {
+  border-radius: 5px 5px 0 0;
+}
+
+.table__row {
+  border-bottom: 2px solid #F1F1F1;
+  transition: all 0.2s ease-in-out;
+  background-color: white
+}
+
+.table__row:last-of-type {
+  border-bottom: none;
+}
+
+.table__body .trains-table__row:hover {
+  cursor: pointer;
+  background-color: #EEF6FF;
+}
+
+.table__cell {
+  margin: 0;
+  padding: 15px 75px 15px 20px;
+
+  font-weight: 400;
+  font-size: 16px;
+  text-align: start;
+}
+
+.table__cell_place_head {
+  font-weight: 500;
+  background-color: #F6F8FA;
+  color: grey;
+}
