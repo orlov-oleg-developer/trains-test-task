@@ -19,11 +19,12 @@ export interface ISelect {
 interface TableProps {
   headers: IHeader[];
   data: IData[];
+  disabled: boolean;
   onBlur: (props: any) => void;
   onChange: (arrayIndex: number, objectKey: any, value: any) => void;
 }
 
-function Table({ headers, data, onBlur, onChange }: React.PropsWithChildren<TableProps>) {
+function Table({ headers, data, disabled, onBlur, onChange }: React.PropsWithChildren<TableProps>) {
   return (
     <div className='table__container'>
       <table className='table'>
@@ -43,16 +44,16 @@ function Table({ headers, data, onBlur, onChange }: React.PropsWithChildren<Tabl
                   return (
                     <td key={headerIndex} className='table__cell'>
                       {header.type === 'string' ?
-                        <input type='string' value={value} onBlur={onBlur} onChange={(event) => onChange(dataIndex, key, event.target.value)} /> :
+                        <input type='string' value={value} disabled={disabled} onBlur={onBlur} onChange={(event) => onChange(dataIndex, key, event.target.value)} /> :
                         header.type === 'number' ?
-                          <input type='string' value={value} onBlur={onBlur} onChange={(event) => onChange(dataIndex, key, event.target.value)} /> :
+                          <input type='string' value={value} disabled={disabled} onBlur={onBlur} onChange={(event) => onChange(dataIndex, key, event.target.value)} /> :
                           header.type === 'select' ?
-                            <select value={value} onBlur={onBlur} onChange={(event) => onChange(dataIndex, key, event.target.value)}>
+                            <select value={value} disabled={disabled} onBlur={onBlur} onChange={(event) => onChange(dataIndex, key, event.target.value)}>
                               {header.selectVariants && header.selectVariants.map(variant =>
                                 <option value={variant}>{variant}</option>
                               )}
                             </select> :
-                            <input type='string' value={value} onBlur={onBlur} onChange={(event) => onChange(dataIndex, key, event.target.value)} />
+                            <input type='string' disabled={disabled} value={value} onBlur={onBlur} onChange={(event) => onChange(dataIndex, key, event.target.value)} />
                       }
                     </td>
                   )

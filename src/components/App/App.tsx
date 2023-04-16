@@ -33,6 +33,8 @@ const App: FC = () => {
 
   // { loading && <Preloader /> }
 
+  const [disabled, setDisabled] = useState(true);
+
   const headers: IHeader[] = [
     {
       title: 'Рост',
@@ -78,6 +80,7 @@ const App: FC = () => {
       <Table
         headers={headers}
         data={data}
+        disabled={disabled}
         onBlur={(props: any) => console.log(props)}
         onChange={onChangeCb}
       />
